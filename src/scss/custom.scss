@@ -1,0 +1,172 @@
+// Here you can add other styles
+.body {
+  background-image: url(../assets/images/home-backgroundlight.png);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 50px;
+}
+.btn-website{
+  background: rebeccapurple !important;
+  padding: 10px 20px 10px 20px !important;
+  font-weight: 700;
+  color: white;
+  border-radius: 30px;
+  outline: none;
+  text-decoration: none;
+
+  &:hover {
+    transition: 0.3s;
+    color: white ;
+    background: rgb(133, 85, 180) !important;
+
+  }
+}
+
+.appfooter {
+  background-color: white;
+  border-top: 5px solid rgb(233, 231, 231);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  padding: 17px;
+}
+.appfooter > div  {
+    a {
+      color: rgb(133, 85, 180);
+      text-decoration: none;
+      font-weight: 800;
+    }
+}
+
+.logoBar {
+  border-bottom: 1px solid rgb(226, 224, 224);
+}
+
+.sidebarBottom {
+  background-color: white;
+}
+
+.infoContain-topbar {
+  box-shadow: rgb(25 19 38 / 70%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+  color: rgb(111, 50, 126);
+  text-align: center;
+  font-size: 27px;
+  font-weight: 800;
+  border-radius: 25px;
+  padding: 25px;
+
+}
+.card {
+  border-radius: 30px;
+  .infoContainer {
+    text-align: center;
+    border: none;
+  }
+
+  .infoContain {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: rgb(25 19 38 / 70%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+  }
+  h1 {
+    color: rgb(111, 50, 126);
+    font-size: 20px;
+    font-weight: 700;
+  }
+  p {
+    color: rgb(177, 105, 196);
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+.ftstakingInput {
+  border: none !important;
+  outline: none !important;
+  background: aliceblue;
+  width: 100%;
+  border-radius: 20px;
+  padding: 10px;
+
+}
+
+.ftstakeBtn {
+  border: none;
+  width: 100%;
+  border-radius: 20px;
+  background: rebeccapurple !important;
+  margin-top: 10px;
+  color: white;
+  font-weight: 700;
+  padding: 10px 20px 10px 20px;
+
+  &:hover {
+    transition: 0.5s;
+    background: rgb(139, 80, 197) !important;
+  }
+}
+.toptitleContainer {
+  h1 {
+    font-weight: 800;
+    color: rebeccapurple;
+    text-align: center;
+    font-size: 30px;
+    padding-bottom: 30px;
+  }
+  p {
+    font-weight: 800;
+    color: rgb(100, 99, 100);
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 30px;
+  }
+}
+.nfttoptitleContainer {
+  text-align: center;
+  h1 {
+    color: rgb(73, 38, 107);
+    font-size: 50px;
+    font-weight: 800;
+  }
+  p {
+    color: rgb(110, 65, 155);
+    font-size: 15px;
+    font-weight: 800;
+  }
+}
+.sidebarBottom {
+  padding: 20px;
+  background-color: white;
+  color: black;
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+  border: none;
+}
+
+@media screen and (max-width: 375px){
+  .container-fluid {
+    display: flex !important;
+    justify-content: center !important;
+  }
+}
+
+
+/*NFT STaking SCSS*/
+.connectWalletContain{
+  background-color: white;
+  border-radius: 50px;
+  box-shadow: rgb(25 19 38 / 70%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+  padding: 90px 0 0px 0;
+  justify-content: center;
+    h1 {
+      font-size: 30px;
+    }
+    button {
+      width: 70% !important;
+    }
+}
+
