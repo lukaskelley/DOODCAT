@@ -36,7 +36,7 @@ const AppSidebar = () => {
           className="sidebar-brand-full text-body"
           src={Logo}
           alt="logo"
-          style={{ width: '90%', height: '55px' }}
+          style={{ width: '90%', height: '54px' }}
         />
         <img
           className="sidebar-brand-narrow"
@@ -50,6 +50,14 @@ const AppSidebar = () => {
           <AppSidebarNav items={navigation} />
         </SimpleBar>
       </CSidebarNav>
+      <div className="linkContainer">
+        <a href="https://twitter.com/SpaceCatsSGB">
+          <i className="fab fa-twitter" />
+        </a>
+        <a href="https://discord.com/invite/4XCPKcmM">
+          <i className="fab fa-discord" />
+        </a>
+      </div>
       <button
         className="d-none d-lg-flex sidebarBottom"
         onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}

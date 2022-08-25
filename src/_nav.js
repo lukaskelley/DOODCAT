@@ -16,7 +16,7 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'FT Staking',
+    name: 'sDood Staking',
     to: '/ftstaking',
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
   },
@@ -26,9 +26,19 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Info',
+    name: 'Information',
     to: '/info',
     icon: <CIcon icon={cilInfo} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'MARKETPLACE',
+  },
+  {
+    component: CNavItem,
+    name: 'NFT MarketPlace',
+    to: '/nftmarket',
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" disabled />,
   },
 ]
 

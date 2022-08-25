@@ -5,6 +5,11 @@
     background-size: cover;
     background-repeat: no-repeat;
     padding: 50px;
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+}
+.connectWalletContainer {
+  box-shadow: rgb(25 19 38 / 70%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px !important;
 }
 .btn-website{
   background: rebeccapurple !important;
@@ -20,6 +25,32 @@
     color: white ;
     background: rgb(133, 85, 180) !important;
 
+  }
+}
+@media screen and (max-width: 405px){
+  .sidebar-brand-full {
+    margin-right: 100px;
+  }
+  .nftStakingContainer {
+    padding: 0px !important;
+  }
+  .btn-website{
+    padding: 5px 20px 5px 20px !important;
+  }
+  .nftStakingTopTitle {
+    font-size: 30px !important;
+  }
+  .top-title {
+    padding-top: 20px;
+    font-size: 15px !important;
+  }
+
+  .ftStakingContainer {
+    padding: 0px !important;
+  }
+
+  .infoContain {
+    padding: 0px 0px 0px 20px !important;
   }
 }
 
@@ -43,13 +74,10 @@
   border-bottom: 1px solid rgb(226, 224, 224);
 }
 
-.sidebarBottom {
-  background-color: white;
-}
-
 .infoContain-topbar {
+  background: white;
   box-shadow: rgb(25 19 38 / 70%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
-  color: rgb(111, 50, 126);
+  color: rgb(69, 42, 122);
   text-align: center;
   font-size: 27px;
   font-weight: 800;
@@ -67,19 +95,58 @@
   .infoContain {
     text-align: center;
     margin-top: 30px;
-    padding: 10px;
+    padding: 20px;
     border-radius: 25px;
     box-shadow: rgb(25 19 38 / 70%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+    h1 {
+      color: rgb(69, 42, 122);
+      font-size: 15px;
+      text-align: left;
+      font-weight: 700;
+    }
+    p {
+      color: rgb(177, 105, 196);
+      font-size:30px;
+      text-align: left;
+      font-weight: 600;
+    }
   }
-  h1 {
-    color: rgb(111, 50, 126);
+
+
+}
+.ftinfoContain {
+  background: white !important;
+  text-align: center;
+  margin-top: 30px;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: rgb(25 19 38 / 70%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+
+    h1 {
+    color: rgb(69, 42, 122);
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 800;
+    }
+    p {
+      color: rgb(120, 77, 170);
+      font-size: 13px;
+      font-weight: 700;
+    }
+}
+.toptitleContainer {
+  h1 {
+    font-weight: 800;
+    color: rgb(69, 42, 122);
+    text-align: center;
+    font-size: 40px;
+    padding-bottom: 30px;
   }
   p {
-    color: rgb(177, 105, 196);
-    font-size: 18px;
-    font-weight: 700;
+    font-weight: 800;
+    color: rgb(69, 42, 122);
+    text-align: center;
+    font-size: 17px;
+    padding-bottom: 30px;
   }
 }
 
@@ -97,7 +164,7 @@
   border: none;
   width: 100%;
   border-radius: 20px;
-  background: rebeccapurple !important;
+  background: rgb(118, 69, 217) !important;
   margin-top: 10px;
   color: white;
   font-weight: 700;
@@ -108,22 +175,7 @@
     background: rgb(139, 80, 197) !important;
   }
 }
-.toptitleContainer {
-  h1 {
-    font-weight: 800;
-    color: rebeccapurple;
-    text-align: center;
-    font-size: 30px;
-    padding-bottom: 30px;
-  }
-  p {
-    font-weight: 800;
-    color: rgb(100, 99, 100);
-    text-align: center;
-    font-size: 20px;
-    padding-bottom: 30px;
-  }
-}
+
 .nfttoptitleContainer {
   text-align: center;
   h1 {
@@ -147,10 +199,46 @@
   border: none;
 }
 
-@media screen and (max-width: 375px){
+@media screen and (max-width: 385px){
+  .body {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
   .container-fluid {
     display: flex !important;
     justify-content: center !important;
+  }
+  .sc-jqUVSM {
+    gap: 5PX !important;
+  }
+  .unstakedContainer {
+    gap: 10px !important;
+  }
+  .sc-bczRLJ {
+    gap: 0px !important;
+  }
+  .harvestBtn {
+    font-size: 12px !important;
+  }
+  .unstakeAllBtn {
+    font-size: 12px !important;
+  }
+  .totalValue {
+    text-align: center;
+    font-size: 18px !important;
+  }
+  .infoContain > h1, p {
+    text-align: center !important;
+  }
+  .headerBtnContainer {
+    margin-right: 0px !important;
+  }
+  .nftCardContainer {
+    gap:5px !important;
+    padding: 0px !important;
+  }
+  .headerBtnContainer > * {
+    width: 30% !important;
   }
 }
 
@@ -167,6 +255,9 @@
     }
     button {
       width: 70% !important;
+    }
+    .stakeBtn {
+      width: 70%;
     }
 }
 

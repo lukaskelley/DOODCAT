@@ -5,10 +5,10 @@ const AppFooter = () => {
   return (
     <CFooter className="appfooter">
       <div>
-        <a href="https://doodcats.com" target="_blank" rel="noopener noreferrer">
-          DOODCATS
+        <a href="https://doodcats.net" target="_blank" rel="noopener noreferrer">
+          DoodCats
         </a>
-        <span className="ms-1">&copy; 2022 creativeLabs.</span>
+        <span className="ms-1">&copy; 2022 SpaceCats.</span>
       </div>
     </CFooter>
   )

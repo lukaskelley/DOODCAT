@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import config, { NFTAddress, NFTStakingAddress } from '../../config/config'
-import abi from '../../assets/abi/abi.json'
 import styled from 'styled-components'
+import banner from '../../assets/images/welcome.png'
+import config, { NFTStakingAddress } from '../../config/config'
+import abi from '../../assets/abi/abi.json'
 import nftstakingabi from '../../assets/abi/nftStakingABI.json'
 import sDooDABI from '../../assets/abi/sdood.json'
-import { CCol, CRow } from '@coreui/react'
-import '../../scss/custom.scss'
-import WelcomeIMG from '../../assets/images/welcome.png'
 import NFTCard from './NFTCard'
+import '../../scss/custom.scss'
 const ethers = require('ethers')
 
 const StakingContainer = styled.div`
@@ -19,14 +18,6 @@ const StakingContainer = styled.div`
 
 const Title = styled.h1`
   text-align: center;
-`
-
-const Image = styled.div`
-  background-image: url(${WelcomeIMG});
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 500px;
-  height: 400px;
 `
 
 const StakingWrapper = styled.div`
@@ -44,13 +35,12 @@ const InfoPanel = styled.div`
   gap: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  width: 750px;
+  width: 100%;
   min-height: 600px;
   border-radius: 20px;
-  border: 5px solid black;
-  padding: 20px;
+  box-shadow: rgb(25 19 38 / 70%) 0px 8px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+  padding: 10px;
   background: white;
 `
 
@@ -83,17 +73,6 @@ const Splitter = styled.div`
   width: 100%;
 `
 
-const TokenContainer = styled.div`
-  width: 87%;
-  margin: 0px 50px;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  border: 5px solid black;
-  padding: 20px;
-  border-radius: 20px;
-`
-
 const TokenGrid = styled.div`
   display: flex;
   flex-direction: row;
@@ -113,10 +92,6 @@ const Nftstaking = () => {
   const [isStartStaking, setIsStartStaking] = useState(false)
   // usestate defaultAccount null
   const [defaultAccount, setDefaultAccount] = useState(null)
-  // usestate totalStaked 0
-  const [totalStaked, setTotalStaked] = useState(0)
-  // usestate isUserStaked false
-  const [isUserStaked, setIsUserStaked] = useState(false)
   // usestate loading false
   const [loading, setLoading] = useState(false)
   // startedStaking false
@@ -125,12 +100,6 @@ const Nftstaking = () => {
   const [totalRewards, setTotalRewards] = useState(0)
   // usestate sctBalance 0
   const [sctBalance, setSctBalance] = useState(0)
-
-  // usestate has stakedNFTs false
-  const [hasStakedNFTs, setHasStakedNFTs] = useState(false)
-  // usestate has unstakedNFTs false
-  const [hasUnstakedNFTs, setHasUnstakedNFTs] = useState(false)
-
   // usestate stakedNFTs []
   const [stakedNFTs, setStakedNFTs] = useState([])
   // usestate unstakedNFTs []
@@ -152,8 +121,6 @@ const Nftstaking = () => {
   // usestate signer null
   const [signer2, setSigner2] = useState(null)
 
-  const selectedAccount = window.ethereum.selectedAddress
-
   const connect = async () => {
     if (window.ethereum !== undefined) {
       let chain = config.chainId.toString()
@@ -169,6 +136,7 @@ const Nftstaking = () => {
   }
 
   const accountChangedHandler = (account) => {
+    localStorage.setItem('defaultaccount', account)
     setDefaultAccount(account)
     updateEthers()
   }
@@ -199,7 +167,6 @@ const Nftstaking = () => {
   const startStaking = async () => {
     let stakedTokens = []
     let unstakedTokens = []
-    let level = []
     setLoading(true)
     // let total =  nftstakingcontract.availableRewards(NFTAddress);
     // setTotalRewards(total);
@@ -210,39 +177,59 @@ const Nftstaking = () => {
     //       //  console.log('level', level);
     //   });
     // })
-    await contract.walletOfOwner(defaultAccount).then(async (wallet) => {
+
+    await nftstakingcontract.getStakedNFTList(defaultAccount).then(async (wallet) => {
+      localStorage.setItem('MystakedNFT', wallet.length)
       for (let j = 0; j < wallet.length; j++) {
-        await nftstakingcontract.stakeNFT(Number(wallet[j].toString())).then((stakeInfo) => {
-          level = stakeInfo.level
-          //  console.log('level', level);
-          stakedTokens.push({
-            tokenId: Number(wallet[j]).toString(),
-            level: Number(level).toString(),
-            src: config.baseURI + '/' + wallet[j].toString() + '.png',
-            staked: true,
+        // eslint-disable-next-line no-loop-func
+        await nftstakingcontract.stakedNFTs(Number(wallet[j].toString())).then((stakeInfo) => {
+          nftstakingcontract.calculateRewardsNFT(Number(wallet[j])).then((totalreward) => {
+            let unrounded = ethers.utils.formatEther(totalreward.toString())
+            let total = parseFloat(unrounded).toFixed(2)
+            stakedTokens.push({
+              tokenId: Number(wallet[j]).toString(),
+              balance: total,
+              level: Number(stakeInfo.level).toString(),
+              src: config.baseURI + '/' + wallet[j].toString() + '.png',
+              isStaked: true,
+            })
           })
         })
       }
     })
-
     await contract2.balanceOf(defaultAccount).then((balance) => {
       let unrounded = ethers.utils.formatEther(balance.toString())
       let balance2 = parseFloat(unrounded).toFixed(2)
       setSctBalance(balance2)
+      localStorage.setItem('sdoodBalance', balance2)
     })
-
+    await nftstakingcontract.getTotalBurn().then((totalBurn) => {
+      let unrounded = ethers.utils.formatEther(totalBurn.toString())
+      let burn = parseFloat(unrounded).toFixed(2)
+      localStorage.setItem('sdoodBurn', burn)
+    })
+    await nftstakingcontract.getTotalrewards(defaultAccount).then((balance) => {
+      let unrounded = ethers.utils.formatEther(balance.toString())
+      let balance2 = parseFloat(unrounded).toFixed(2)
+      setTotalRewards(balance2)
+      console.log('totalreward==>', totalRewards)
+    })
     await contract.walletOfOwner(defaultAccount).then(async (wallet) => {
       for (let i = 0; i < wallet.length; i++) {
-        await nftstakingcontract.stakeNFT(Number(wallet[i].toString())).then((stakeInfo) => {
-          if (!stakeInfo.flag) {
+        await nftstakingcontract.stakedNFTs(Number(wallet[i].toString())).then((stakeInfo) => {
+          if (!stakeInfo.isStaked) {
             unstakedTokens.push({
               tokenId: Number(wallet[i].toString()),
-              balance: 0,
+              isStaked: false,
               src: config.baseURI + '/' + wallet[i].toString() + '.png',
             })
           }
         })
       }
+    })
+
+    await contract.walletOfOwner(NFTStakingAddress).then((nftTotalStaked) => {
+      localStorage.setItem('TotalstakedNFT', nftTotalStaked.length)
     })
 
     unstakedTokens.sort((a, b) => {
@@ -251,22 +238,33 @@ const Nftstaking = () => {
     stakedTokens.sort((a, b) => {
       return a.tokenId - b.tokenId
     })
-
     setStakedNFTs(stakedTokens)
-    console.log('stakedTokens', stakedTokens)
-    console.log('unstaked', unstakedTokens)
+    console.log(stakedNFTs)
     setUnstakedNFTs(unstakedTokens)
     setLoading(false)
     setIsStartStaking(true)
     setStartedStaking(true)
   }
-
   const harvest = async () => {
-    nftstakingcontract.claimRewards().then((tx) => {
+    let token_id = []
+    for (let i = 0; i < stakedNFTs.length; i++) {
+      token_id[i] = stakedNFTs[i].tokenId
+    }
+    nftstakingcontract.claimRewards(token_id).then((tx) => {
       tx.wait().then(() => {
         window.location.reload()
       })
     })
+  }
+  const setApprovalAll = async () => {
+    let approve_nft = localStorage.getItem('approve_nft')
+    if (!approve_nft)
+      await contract.setApprovalForAll(NFTStakingAddress, true).then((tx) => {
+        tx.wait().then((tx) => {
+          localStorage.setItem('approve_token', true)
+          console.log('approved')
+        })
+      })
   }
 
   const stakeAll = async () => {
@@ -275,7 +273,7 @@ const Nftstaking = () => {
       token_id[i] = unstakedNFTs[i].tokenId
     }
     console.log(token_id)
-    await nftstakingcontract.stake(token_id, { gasLimit: 3000000 }).then((tx) => {
+    await nftstakingcontract.stake(token_id).then((tx) => {
       tx.wait().then((tx) => {
         window.location.reload()
       })
@@ -292,7 +290,7 @@ const Nftstaking = () => {
     for (let i = 0; i < stakedNFTs.length; i++) {
       token_id[i] = stakedNFTs[i].tokenId
     }
-    await nftstakingcontract.withdraw(token_id, { gasLimit: 3000000 }).then((tx) => {
+    await nftstakingcontract.unStake(token_id).then((tx) => {
       tx.wait().then((tx) => {
         nftstakingcontract.claimRewards()
         window.location.reload()
@@ -300,17 +298,18 @@ const Nftstaking = () => {
     })
   }
 
-  const approve = async () => {
-    await contract.setApprovalForAll(contract2.address, true).then((tx) => {
-      tx.wait().then(() => {
-        console.log('Approved')
-      })
-    })
-  }
+  // const approve = async () => {
+  //   await contract.setApprovalForAll(contract2.address, true).then((tx) => {
+  //     tx.wait().then(() => {
+  //       console.log('Approved')
+  //     })
+  //   })
+  // }
 
   return (
-    <StakingContainer style={{ paddingTop: '100px' }}>
+    <StakingContainer className="nftStakingContainer" style={{ padding: '50px' }}>
       <Title
+        className="nftStakingTopTitle"
         style={{
           fontWeight: '800',
           fontSize: '50px',
@@ -324,7 +323,7 @@ const Nftstaking = () => {
         className="top-title"
         style={{
           fontWeight: '600',
-          fontSize: '22px',
+          fontSize: '20px',
           color: 'rgb(69, 42, 122)',
         }}
       >
@@ -335,7 +334,7 @@ const Nftstaking = () => {
           <br />
           - Lvl 2 costs 1350 $sDOOD = Lvl 2 - Earn 250 sDOOD/day
           <br />
-          - Lvl 3 costs 1800 $sDOOD = Lvl 3 - Earn 350 sDOOD/day
+          - Lvl 3 costs 1800 $sDOOD = Lvl 3 - Earn 300 sDOOD/day
           <br />
           - Lvl 4 costs 2250 $sDOOD = Lvl 4 - Earn 400 sDOOD/day
           <br />
@@ -348,14 +347,14 @@ const Nftstaking = () => {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            width: '500px',
-            height: '400px',
+            width: '400px',
+            height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
           <img
-            src={WelcomeIMG}
+            src={banner}
             alt="banner"
             style={{
               width: '100%',
@@ -364,11 +363,12 @@ const Nftstaking = () => {
           />
         </div>
         <div
+          className="connectWalletContainer"
           style={{
             display: 'flex',
             flexDirection: 'column',
             width: '500px',
-            height: '316px',
+            height: '100%',
             alignItems: 'center',
             borderRadius: '50px',
             background: 'white',
@@ -379,10 +379,11 @@ const Nftstaking = () => {
             <>
               <h1
                 style={{
+                  textAlign: 'center',
                   fontWeight: '800',
                   fontSize: '20px',
                   color: 'rgb(69, 42, 122)',
-                  paddingTop: '20%',
+                  paddingTop: '10%',
                 }}
               >
                 Connect Your Wallet
@@ -407,11 +408,11 @@ const Nftstaking = () => {
                     fontWeight: '800',
                     fontSize: '20px',
                     color: 'rgb(69, 42, 122)',
-                    paddingTop: '20%',
+                    paddingTop: '1%',
                   }}
                 >
                   {' '}
-                  Gathering info - loading{' '}
+                  Hold on Dood! We are working{' '}
                 </h1>
               ) : (
                 <>
@@ -431,7 +432,7 @@ const Nftstaking = () => {
                         <br />
                         <h1
                           style={{
-                            fontWeight: '800',
+                            fontWeight: '700',
                             fontSize: '20px',
                             color: 'rgb(69, 42, 122)',
                           }}
@@ -451,7 +452,7 @@ const Nftstaking = () => {
                         </h1>
                         <h1
                           style={{
-                            fontWeight: '800',
+                            fontWeight: '700',
                             fontSize: '18px',
                             color: 'rgb(69, 42, 122)',
                           }}
@@ -514,7 +515,7 @@ const Nftstaking = () => {
                         You need to approve first in order to stake your DoodCats.
                       </p>
                       <Button
-                        onClick={approve}
+                        onClick={setApprovalAll}
                         style={{
                           background: 'rgb(118, 69, 217)',
                           fontSize: '20px',
@@ -559,24 +560,28 @@ const Nftstaking = () => {
               </h1>
               <Splitter>
                 <Button
+                  className="harvestBtn"
                   onClick={harvest}
                   style={{
                     background: 'rgb(118, 69, 217)',
-                    fontSize: '20px',
+                    fontSize: '18px',
                     color: 'white',
                   }}
                 >
                   Harvest All
                 </Button>
                 <h1
+                  className="totalValue"
                   style={{
-                    fontSize: '32px',
-                    color: 'Black',
+                    fontSize: '24px',
+                    color: 'rgb(69, 42, 122)',
+                    fontWeight: '700',
                   }}
                 >
                   Total : {totalRewards}{' '}
                 </h1>
                 <Button
+                  className="unstakeAllBtn"
                   onClick={unstakeAll}
                   style={{
                     background: 'rgb(118, 69, 217)',
@@ -587,23 +592,23 @@ const Nftstaking = () => {
                   Unstake All
                 </Button>
               </Splitter>
-              <TokenGrid>
+              <TokenGrid className="unstakedContainer">
                 {stakedNFTs.map((token) => {
                   return (
-                    <>
-                      <NFTCard
-                        tokenId={token.tokenId}
-                        staked={token.staked}
-                        // balance={token.balance}
-                        src={token.src}
-                        level={token.level}
-                      />
-                    </>
+                    // eslint-disable-next-line react/jsx-key
+                    <NFTCard
+                      tokenId={token.tokenId}
+                      isStaked={token.isStaked}
+                      balance={token.balance}
+                      src={token.src}
+                      level={token.level}
+                    />
                   )
                 })}
               </TokenGrid>
               <Splitter>
                 <Button
+                  className="harvestBtn"
                   onClick={harvest}
                   style={{
                     background: 'rgb(118, 69, 217)',
@@ -614,14 +619,17 @@ const Nftstaking = () => {
                   Harvest All
                 </Button>
                 <h1
+                  className="totalValue"
                   style={{
-                    fontSize: '32px',
-                    color: 'Black',
+                    fontSize: '30px',
+                    color: 'rgb(69, 42, 122)',
+                    fontWeight: '700',
                   }}
                 >
                   Total : {totalRewards}{' '}
                 </h1>
                 <Button
+                  className="unstakeAllBtn"
                   onClick={unstakeAll}
                   style={{
                     background: 'rgb(118, 69, 217)',
@@ -649,17 +657,16 @@ const Nftstaking = () => {
                 Unstaked NFTs
               </h1>
 
-              <TokenGrid>
+              <TokenGrid className="unstakedContainer">
                 {unstakedNFTs.map((token) => {
                   return (
-                    <>
-                      <NFTCard
-                        tokenId={token.tokenId}
-                        //  staked={token.staked}
-                        //  balance={token.balanc2}
-                        src={token.src}
-                      />
-                    </>
+                    // eslint-disable-next-line react/jsx-key
+                    <NFTCard
+                      tokenId={token.tokenId}
+                      //  staked={token.staked}
+                      //  balance={token.balanc2}
+                      src={token.src}
+                    />
                   )
                 })}
               </TokenGrid>
@@ -688,4 +695,5 @@ const Nftstaking = () => {
     </StakingContainer>
   )
 }
+
 export default Nftstaking

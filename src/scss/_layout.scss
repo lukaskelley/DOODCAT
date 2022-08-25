@@ -6,7 +6,8 @@
 }
 .simplebar-content > li > a  >svg,.simplebar-content > li > a {
   font-weight: 700;
-  color:rgb(144, 100, 187) !important;
+  font-size: 18px;
+  color:rgb(143, 128, 186) !important;
 }
 .sidebar-nav .nav-link.active {
   background-color: white!important;
@@ -17,4 +18,21 @@
 }
 .sidebar-nav .nav-link:hover {
   background-color: rgb(221, 220, 221);
+}
+.header-brand {
+  display: flex;
+}
+.linkContain {
+  margin:10px !important;
+}
+.sidebarBottom {
+  color:rgb(143, 128, 186) !important;
+}
+.linkContainer  {
+  text-align: center;
+  i {
+    font-size: 25px;
+    color:rgb(143, 128, 186) !important;
+    padding: 20px;
+  }
 }

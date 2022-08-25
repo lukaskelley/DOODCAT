@@ -1,10 +1,16 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { CContainer, CHeader, CHeaderBrand, CHeaderNav, CHeaderToggler } from '@coreui/react'
+import {
+  CContainer,
+  CHeader,
+  CHeaderBrand,
+  CHeaderNav,
+  CHeaderToggler,
+  CCol,
+  CRow,
+} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
-
-import Logo from '../assets/images/newlogo.png'
 
 import '../scss/style.scss'
 const AppHeader = () => {
@@ -20,19 +26,17 @@ const AppHeader = () => {
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
-        <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <img
-            className="sidebar-brand-full text-body"
-            src={Logo}
-            alt="logo"
-            style={{ width: '100%', height: '55px' }}
-          />
-        </CHeaderBrand>
-        <CHeaderNav className="ms-3">
-          <a className="btn-website" href="https://doodcats.com">
-            Website
-          </a>
-        </CHeaderNav>
+        <CHeaderBrand className="mx-auto d-md-none" to="/"></CHeaderBrand>
+        <CRow className="headerBtnContainer">
+          <CCol lg={1} />
+          <CCol lg={4}>
+            <CHeaderNav className="ms-3">
+              <a className="btn-website" href="https://doodcats.net">
+                Website
+              </a>
+            </CHeaderNav>
+          </CCol>
+        </CRow>
       </CContainer>
     </CHeader>
   )

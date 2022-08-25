@@ -2,71 +2,13 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "burn",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "claimRewards",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "addr",
-				"type": "address"
-			}
-		],
-		"name": "setCollection",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "contract IERC721",
-				"name": "_sDOODNFT",
+				"internalType": "contract DoodCats",
+				"name": "_sDoodNFT",
 				"type": "address"
 			},
 			{
 				"internalType": "contract sDOODV2",
-				"name": "_sDOOD",
+				"name": "_sDood",
 				"type": "address"
 			}
 		],
@@ -108,21 +50,8 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256[]",
-				"name": "_tokenIds",
-				"type": "uint256[]"
-			}
-		],
-		"name": "stake",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "uint256",
-				"name": "tokenId",
+				"name": "_tokenID",
 				"type": "uint256"
 			}
 		],
@@ -135,11 +64,11 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "tokenId",
+				"name": "_tokenID",
 				"type": "uint256"
 			}
 		],
-		"name": "UpgradeMax",
+		"name": "UpgradeLevelMax",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -147,14 +76,90 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "_tokenID",
+				"type": "uint256"
+			}
+		],
+		"name": "calculateRewardsNFT",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256[]",
-				"name": "_tokenIds",
+				"name": "_tokenIDs",
 				"type": "uint256[]"
 			}
 		],
-		"name": "withdraw",
+		"name": "claimRewards",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenID",
+				"type": "uint256"
+			}
+		],
+		"name": "getLevel",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getStakedNFTCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getStakedNFTList",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -171,32 +176,32 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "nftCollection",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "contract IERC721",
-				"name": "",
+				"internalType": "address",
+				"name": "user",
 				"type": "address"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
+		"name": "getTotalrewards",
+		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
 		],
-		"name": "NFTindex",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "nftCollection",
 		"outputs": [
 			{
-				"internalType": "uint8",
+				"internalType": "contract DoodCats",
 				"name": "",
-				"type": "uint8"
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -217,6 +222,13 @@
 	},
 	{
 		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "rewardsToken",
 		"outputs": [
 			{
@@ -231,12 +243,25 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint256[]",
+				"name": "_tokenIDs",
+				"type": "uint256[]"
+			}
+		],
+		"name": "stake",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
 		],
-		"name": "stakeNFT",
+		"name": "stakedNFTs",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -249,57 +274,23 @@
 				"type": "uint8"
 			},
 			{
+				"internalType": "uint256",
+				"name": "tokenID",
+				"type": "uint256"
+			},
+			{
 				"internalType": "bool",
-				"name": "flag",
+				"name": "isStaked",
 				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "users",
-		"outputs": [
-			{
-				"internalType": "uint16",
-				"name": "amountLvl0",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "amountLvl1",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "amountLvl2",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "amountLvl3",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "amountLvl4",
-				"type": "uint16"
 			},
 			{
 				"internalType": "uint256",
-				"name": "timeOfLastUpdate",
+				"name": "lastUpdatedTime",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "unclaimedRewards",
+				"name": "lackRewards",
 				"type": "uint256"
 			}
 		],
@@ -310,44 +301,26 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_user",
+				"name": "newOwner",
 				"type": "address"
 			}
 		],
-		"name": "userStakeInfo",
-		"outputs": [
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
-				"internalType": "uint16",
-				"name": "LEVEL0",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "LEVEL1",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "LEVEL2",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "LEVEL3",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint16",
-				"name": "LEVEL4",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_availableRewards",
-				"type": "uint256"
+				"internalType": "uint256[]",
+				"name": "_tokenIDs",
+				"type": "uint256[]"
 			}
 		],
-		"stateMutability": "view",
+		"name": "unStake",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
